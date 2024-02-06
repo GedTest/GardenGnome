@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  background-color: #fdeec4;
+}
+.container {
+  width: 90%;
+  margin: auto;
+}
+nav {
+  display: flex;
+  padding: 2vw 0;
+}
+.links {
+  margin-left: auto;
+}
+.links a {
+  text-decoration: none;
+  color: black;
+  padding: 1vw;
+  border-radius: 2em;
+}
+.links a:hover {
+  background-color: #dba205;
+}

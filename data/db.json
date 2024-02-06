@@ -1,0 +1,22 @@
+{
+    "trees": [
+        {
+            "id": "1",
+            "name": "orchard apple",
+            "imgPath": "./public/img/Malus_domestica.jpg",
+            "plantingDate": "2024-01-15"
+        },
+        {
+            "id": "2",
+            "name": "common pear",
+            "imgPath": "./public/img/Pyrus_communis.jpg",
+            "plantingDate": "2024-02-6"
+        },
+        {
+            "id": "3",
+            "name": "Cherry",
+            "imgPath": "./public/img/Prunus_cerasus.jpg",
+            "plantingDate": "2024-02-10"
+        }
+    ]
+}
