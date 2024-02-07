@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import CalendarForm from "./CalendarForm";
+import CreateForm from "./CreateForm";
 import useFetch from "./useFetch";
 import Event from "./Event";
 import { toReadableDate } from "./date";
+import UpdateForm from "./UpdateForm";
 
 
 const weekday = ["PO", "ÚT", "ST", "ČT", "PÁ", "SO", "NE"];
@@ -18,20 +19,29 @@ export default function Calendar() {
     const [now, setNow] = useState(new Date());
     const [clickedDate, setClickedDate] = useState(null);
     const [lastCell, setLastCell] = useState(null);
-    const { data: events } = useFetch('http://localhost:8000/events');
+    const { data: events, setData: setEvents } = useFetch('http://localhost:8000/events');
     const [isEventVisible, setIsEventVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isUpdateForm, setIsUpdateForm] = useState(false);
     
 
     useEffect(() => {
         if (events) {
             const cells = document.querySelectorAll('.calendar-grid .day-cell');
             events.map(ev => {
-                const day = parseInt(ev.dateFormat.split('-')[2]) - 1;
+                const day = parseInt(ev.date.split('-')[2]) - 1;
                 cells[day].classList.add('has-event');
             });
         }
     }, [events]);
+
+    async function handleFetchEvents() {
+        const response = await fetch('http://localhost:8000/events');
+        const data = await response.json();
+        setEvents(data);
+
+        toggleEvent(lastCell);
+    };
 
 
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -80,6 +90,7 @@ export default function Calendar() {
     }
 
     function toggleForm(cell) {
+        setIsUpdateForm(false);
         setIsEventVisible(false);
             
         const day = parseInt(cell.innerText);
@@ -95,6 +106,30 @@ export default function Calendar() {
 
     function markCell() {
         lastCell.classList.add('has-event');
+    }
+
+    function getSelectedEvent() {
+        if (events) {
+            const selectedDay = parseInt(lastCell.innerText);
+            for(let ev of events) {
+                const day = parseInt(ev.date.split('-')[2]);
+                if(selectedDay === day) { return ev; }
+            }
+        }
+    }
+
+    function handleDelete(event) {
+        fetch('http://localhost:8000/events/' + event.id, {
+            method: 'DELETE'
+        })
+        lastCell.classList.remove('has-event');
+        toggleEvent(lastCell);
+        
+    }
+
+    function handleUpdate() {
+        toggleForm(lastCell);
+        setIsUpdateForm(true);
     }
 
     return (
@@ -123,8 +158,27 @@ export default function Calendar() {
                     )) }
                 </div>
             </div>
-            { isFormVisible && <CalendarForm date={ toReadableDate(clickedDate) } callback={markCell}/> }
-            { isEventVisible && <Event /> }
+            { isFormVisible && (
+                isUpdateForm ? (
+                    <UpdateForm
+                        onFetch={ handleFetchEvents }
+                        event={ getSelectedEvent() }
+                    />
+                ) : (
+                    <CreateForm
+                        selectedDate={ toReadableDate(clickedDate) }
+                        markCell={ markCell }
+                        onFetch={ handleFetchEvents }
+                    />
+                )
+            ) }
+                
+            { isEventVisible &&
+                <Event
+                    event={ getSelectedEvent() }
+                    onUpdate={ handleUpdate }
+                    onDelete={ handleDelete }
+            /> }
         </div>
     );
 }

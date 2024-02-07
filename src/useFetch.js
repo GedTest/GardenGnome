@@ -23,5 +23,5 @@ export default function useFetch(urlEndPoint) {
         return () => controller.abort();
     }, [urlEndPoint]);
 
-    return { data }
+    return { data, setData };
 }

@@ -6,6 +6,19 @@
 body {
   background-color: #FFFFEC;
 }
+button {
+  cursor: pointer;
+  user-select: none;
+  width: 10vw;
+  padding: 1vw 0;
+  border-radius: 1.5em;
+  border-color: #FFFFEC;
+  margin: auto;
+  background-color: #F1E4C3;
+}
+button:hover {
+  background-color: #FFFFEC;
+}
 a {
   text-decoration: none;
   color: black;
@@ -74,6 +87,7 @@ nav {
   background-color: #C6A969;
 }
 .calendar-grid .day-cell {
+  cursor: pointer;
   border: 1px solid #F1E4C3;
 }
 .calendar-grid .day-cell:hover {
@@ -112,6 +126,7 @@ form .form-row textarea {
   background-color: #FFFFEC;
 }
 form .form-row:nth-child(1) {
+  user-select: none;
   justify-content: center;
   width: 60%;
   margin: 2vw auto 0 auto;
@@ -122,9 +137,48 @@ form .form-row:nth-child(1) {
 form .form-row:nth-child(1) div:nth-child(1) {
   margin-right: 1vw;
 }
-form button {
-  width: 10vw;
-  padding: 1vw 3vw;
-  border-radius: 1.5em;
-  margin: 2vw auto;
+.btn-create::before {
+  content: "Přidat";
+}
+form .btn-update::before {
+  content: "Uložit";
+}
+.event-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #C6A969;
+  width: 30vw;
+  height: auto;
+}
+.event-container .title {
+  margin: 2vw 0 1vw 0;
+  padding: 1vw;
+  border-radius: 1.5em 0;
+  background-color: #597E52;
+}
+.event-container .description {
+  width: 80%;
+  margin-top: 5vw;
+  overflow-y: auto;
+  max-height: 15vw;
+}
+.event-container .description::-webkit-scrollbar {
+  width: 1rem;
+}
+.event-container .description::-webkit-scrollbar-track {
+  background-color: #597E52;
+}
+.event-container .description::-webkit-scrollbar-thumb {
+  background-color: #FFFFEC;
+}
+.event-container .description::-webkit-scrollbar-thumb:hover {
+  background-color: #F1E4C3;
+}
+.event-container .event-btn-row {
+  margin-top: 3vw;
+  margin-bottom: 2vw;
+}
+.event-container .event-btn-row .btn-delete {
+  margin-left: 1vw;
 }
