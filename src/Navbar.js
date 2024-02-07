@@ -1,11 +1,14 @@
+import { Link } from "react-router-dom";
+
 export default function Navbar() {
     return (
         <nav>
             <h2>Zahradní skřítek</h2>
             <div className="links">
-                <a href="#">Kalendář</a>
-                <a href="#">Plánek zahrady</a>
-                <a href="#">Archiv</a>
+                <Link to="/">Domů</Link>
+                <Link to="/calendar">Kalendář</Link>
+                <Link to="">Plánek zahrady</Link>
+                <Link to="">Archiv</Link>
             </div>
         </nav>
     );

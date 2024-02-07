@@ -43,16 +43,39 @@ export default function Calendar() {
     }
 
     function handleClick(e) {
+        if(lastCell) {
+            lastCell.classList.remove('selected-day');
+        }
+
         const cell = e.target;
         const day = parseInt(cell.innerText);
         
         
         const date = new Date(firstDay.getFullYear(), firstDay.getMonth(), day);
         setClickedDate(date);
-
+        
+        showForm(cell);
         setLastCell(cell);
-    }
 
+        if(cell !== lastCell) {
+            cell.classList.add('selected-day');
+        }
+    }
+    
+    function showForm(cell) {
+        const cssClass = 'open';
+        
+        const form = document.querySelector('form');
+        const calendar = document.querySelector('.calendar-container');
+        
+        if(cell === lastCell && form.classList.contains(cssClass)) {
+            form.classList.remove(cssClass);
+            calendar.classList.remove(cssClass);
+            return;
+        } 
+        form.classList.add(cssClass);
+        calendar.classList.add(cssClass);
+    }
 
     return (
         <div className="calendar-container">
@@ -70,6 +93,8 @@ export default function Calendar() {
                 ))}
                 { lastEmtpyCells && lastEmtpyCells.map(_ => (<div className="empty-cell"></div>)) }
             </div>
+            
+            <CalendarForm date={ formatDate(clickedDate) }/>
         </div>
     );
 }
