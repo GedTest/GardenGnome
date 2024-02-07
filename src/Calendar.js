@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CalendarForm from "./CalendarForm";
+import useFetch from "./useFetch";
+import Event from "./Event";
+import { toReadableDate } from "./date";
 
 
 const weekday = ["PO", "ÚT", "ST", "ČT", "PÁ", "SO", "NE"];
@@ -15,6 +18,21 @@ export default function Calendar() {
     const [now, setNow] = useState(new Date());
     const [clickedDate, setClickedDate] = useState(null);
     const [lastCell, setLastCell] = useState(null);
+    const { data: events } = useFetch('http://localhost:8000/events');
+    const [isEventVisible, setIsEventVisible] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    
+
+    useEffect(() => {
+        if (events) {
+            const cells = document.querySelectorAll('.calendar-grid .day-cell');
+            events.map(ev => {
+                const day = parseInt(ev.dateFormat.split('-')[2]) - 1;
+                cells[day].classList.add('has-event');
+            });
+        }
+    }, [events]);
+
 
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
     const lastDay = new Date(now.getFullYear(), now.getMonth()+1, 0);
@@ -28,73 +46,85 @@ export default function Calendar() {
 
     const rows = 6;
     const cols = weekday.length;
-    const gridCellCount = rows*cols;
-    const lastEmptyCellCount = gridCellCount - lastDay.getDate() - emptyCellCount;
+    const lastEmptyCellCount = rows*cols - lastDay.getDate() - emptyCellCount;
     const lastEmtpyCells = new Array(lastEmptyCellCount).fill('');
 
-
-
-    function toTwoDigit(n) { return (n < 10) ? '0' + n : n; }
-    function formatDate(date) {
-        if(!date) { return; }
-        let newDate = date;
-        if (typeof date === "string") { newDate = new Date(date); }
-        return `${toTwoDigit(newDate.getDate())}. ${toTwoDigit(newDate.getMonth()+1)}. ${newDate.getFullYear()}`;
-    }
 
     function handleClick(e) {
         if(lastCell) {
             lastCell.classList.remove('selected-day');
         }
-
+        
         const cell = e.target;
-        const day = parseInt(cell.innerText);
-        
-        
-        const date = new Date(firstDay.getFullYear(), firstDay.getMonth(), day);
-        setClickedDate(date);
-        
-        showForm(cell);
-        setLastCell(cell);
+        if(cell.classList.contains('has-event')) {
+            toggleEvent(cell);
+        } else {
+            toggleForm(cell);
+        }
 
+        setLastCell(cell);
         if(cell !== lastCell) {
             cell.classList.add('selected-day');
         }
     }
-    
-    function showForm(cell) {
-        const cssClass = 'open';
+
+    function toggleEvent(cell) {
+        setIsFormVisible(false);
+        setClickedDate(null);
+
+        if(cell === lastCell && isEventVisible) {
+            setIsEventVisible(false);
+        } else if (!isEventVisible) {
+            setIsEventVisible(true);
+        }
+    }
+
+    function toggleForm(cell) {
+        setIsEventVisible(false);
+            
+        const day = parseInt(cell.innerText);
+        const date = new Date(firstDay.getFullYear(), firstDay.getMonth(), day);
+        setClickedDate(date);
         
-        const form = document.querySelector('form');
-        const calendar = document.querySelector('.calendar-container');
-        
-        if(cell === lastCell && form.classList.contains(cssClass)) {
-            form.classList.remove(cssClass);
-            calendar.classList.remove(cssClass);
-            return;
-        } 
-        form.classList.add(cssClass);
-        calendar.classList.add(cssClass);
+        if(cell === lastCell && isFormVisible) {
+            setIsFormVisible(false);
+        } else if (!isFormVisible) {
+            setIsFormVisible(true);
+        }
+    }
+
+    function markCell() {
+        lastCell.classList.add('has-event');
     }
 
     return (
-        <div className="calendar-container">
-            <div className="calendar-header">
-                { `${months[now.getMonth()]} ${now.getFullYear()}` }
+        <div className="calendar-wrapper">
+            <div className="calendar-container">
+                <div className="calendar-header">
+                    { `${months[now.getMonth()]} ${now.getFullYear()}` }
+                </div>
+                <div className="calendar-grid">
+                    { weekday.map((day, index) => (
+                        <div key={index} className="weekday-cell">{ day }</div>
+                    )) }
+                    { emtpyCells && emtpyCells.map((_, index) => (
+                        <div key={index} className="empty-cell"></div>
+                    )) }
+                    { days && days.map((day, index) => (
+                        <div
+                            key={index}
+                            onClick={handleClick}
+                            className={
+                                `day-cell ${day === now.getDate() ? 'current-day' : ''}`
+                            }>{ day }</div>
+                    ))}
+                    { lastEmtpyCells && lastEmtpyCells.map((_, index) => (
+                        <div key={index} className="empty-cell"></div>
+                    )) }
+                </div>
             </div>
-            <div className="calendar-grid">
-                { weekday.map(day => (<div className="weekday-cell">{ day }</div>)) }
-                { emtpyCells && emtpyCells.map(_ => (<div className="empty-cell"></div>)) }
-                { days && days.map(day => (
-                    <div onClick={handleClick}
-                        className={
-                            `day-cell ${day === now.getDate() ? 'current-day' : ''}`
-                        }>{ day }</div>
-                ))}
-                { lastEmtpyCells && lastEmtpyCells.map(_ => (<div className="empty-cell"></div>)) }
-            </div>
-            
-            <CalendarForm date={ formatDate(clickedDate) }/>
+            { isFormVisible && <CalendarForm date={ toReadableDate(clickedDate) } callback={markCell}/> }
+            { isEventVisible && <Event /> }
         </div>
     );
 }

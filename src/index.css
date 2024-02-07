@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 body {
   background-color: #FFFFEC;
@@ -42,13 +43,14 @@ nav {
   background-color: #F1E4C3;
 }
 /* Calendar */
+.calendar-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
 .calendar-container {
   width: 40vw;
   margin: auto;
   user-select: none;
-}
-.calendar-container.open {
-  margin: 0;
 }
 .calendar-header {
   text-align: center;
@@ -58,7 +60,6 @@ nav {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(6, 1fr);
-  border: 1px red solid;
 }
 .calendar-grid div {
   display: flex;
@@ -85,22 +86,29 @@ nav {
 .calendar-grid .selected-day {
   border: 4px solid #597E52;
 }
+.calendar-grid .has-event {
+  background-color: #597E52;
+}
 form {
   display: flex;
   flex-direction: column;
   background-color: #C6A969;
-  height: 0;
-  overflow: hidden;
+  width: 30vw;
+  height: auto;
 }
 form .form-row {
   width: 100%;
   display: flex;
   margin-top: 2vw;
   align-items: center;
-  justify-content: space-around;
 }
 form .form-row input,
 form .form-row textarea {
+  resize: none;
+  border: none;
+  border-bottom: 2px solid #597E52;
+  width: 70%;
+  margin: auto;
   background-color: #FFFFEC;
 }
 form .form-row:nth-child(1) {
@@ -119,7 +127,4 @@ form button {
   padding: 1vw 3vw;
   border-radius: 1.5em;
   margin: 2vw auto;
-}
-form.open {
-  height: auto;
 }

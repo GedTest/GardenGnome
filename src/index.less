@@ -7,7 +7,9 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
+
 body {
     background-color: @bg-primary;
 }
@@ -58,14 +60,15 @@ nav {
 }
 
 /* Calendar */
+.calendar-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
 .calendar-container {
     width: 40vw;
     margin: auto;
     user-select: none;
-    
-    &.open {
-        margin: 0;
-    }
 }
 
 
@@ -78,10 +81,6 @@ nav {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(6, 1fr);
-
-    
-
-    border: 1px red solid;
 
     & div {
         display: flex;
@@ -108,22 +107,29 @@ nav {
     & .selected-day {
         border: 4px solid @bg-accent;
     }
+    & .has-event {
+        background-color: @bg-accent;
+    }
 }
 
 form {
     display: flex;
     flex-direction: column;
     background-color: @bg-dark;
-    height: 0;
-    overflow: hidden;
+    width: 30vw;
+    height: auto;
     
     & .form-row {
         width: 100%;
         display: flex;
         margin-top: 2vw;
         align-items: center;
-        justify-content: space-around;
         & input, textarea {
+            resize: none;
+            border: none;
+            border-bottom: 2px solid @bg-accent;
+            width: 70%;
+            margin: auto;
             background-color: @bg-primary;
         }
         
@@ -145,10 +151,4 @@ form {
         border-radius: 1.5em;
         margin: 2vw auto;
     }
-
-    &.open {
-        height: auto;
-    }
 }
-
-
