@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toJSDate } from "./date";
 
 
-export default function BaseForm({ selectedDate, cssClass, callback }) {
+export default function BaseForm({ selectedDate, text, callback }) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
@@ -37,7 +37,7 @@ export default function BaseForm({ selectedDate, cssClass, callback }) {
                     placeholder="Přidejte popisek"
                 />
             </div>
-            <button className={ cssClass }></button>
+            <button>{ text }</button>
         </form>
     );
 }

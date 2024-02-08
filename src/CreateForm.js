@@ -82,7 +82,7 @@ export default function CreateForm({ selectedDate, markCell, onFetch }) {
     return (
         <BaseForm
             selectedDate={ selectedDate }
-            cssClass="btn-create"
+            text="Přidat"
             callback={ createEvent }
         />
     );

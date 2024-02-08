@@ -41,6 +41,10 @@ nav {
 .links a:hover {
   background-color: #C6A969;
 }
+/* Tree list */
+.list-container {
+  width: 50%;
+}
 .list-row {
   display: flex;
   border-top: 1px solid black;
@@ -137,12 +141,7 @@ form .form-row:nth-child(1) {
 form .form-row:nth-child(1) div:nth-child(1) {
   margin-right: 1vw;
 }
-.btn-create::before {
-  content: "Přidat";
-}
-form .btn-update::before {
-  content: "Uložit";
-}
+/* event */
 .event-container {
   display: flex;
   flex-direction: column;
@@ -181,4 +180,36 @@ form .btn-update::before {
 }
 .event-container .event-btn-row .btn-delete {
   margin-left: 1vw;
+}
+/* homepage */
+.home-container {
+  display: flex;
+  justify-content: space-between;
+}
+.ahoj a {
+  cursor: default;
+}
+/* detail */
+.tree-info-container {
+  width: 60vw;
+  margin: 0 auto;
+}
+.tree-info-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.tree-info-container .info h2 {
+  text-align: center;
+  margin-bottom: 2vw;
+}
+.tree-info-container .info p {
+  width: 60%;
+  margin: auto;
+}
+.tree-info-container .info button {
+  display: block;
+  margin: auto;
+  margin-top: 2vw;
 }

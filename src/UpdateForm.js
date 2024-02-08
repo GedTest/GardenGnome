@@ -15,7 +15,7 @@ export default function UpdateForm({ onFetch, event }) {
     return (
         <BaseForm
             selectedDate={ toReadableDate(event.date) }
-            cssClass="btn-update"
+            text="Uložit"
             callback={ updateEvent }
         />
     );

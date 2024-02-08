@@ -56,6 +56,12 @@ nav {
     }
 }
 
+
+/* Tree list */
+.list-container {
+    width: 50%;
+}
+
 .list-row {
     display: flex;
     border-top: 1px solid black;
@@ -168,15 +174,9 @@ form {
     }
 }
 
-.btn-create::before {
-    content: "Přidat";
-}
-form .btn-update::before {
-    content: "Uložit";
-}
 
 
-// event
+/* event */
 .event-container {
     display: flex;
     flex-direction: column;
@@ -215,6 +215,50 @@ form .btn-update::before {
         margin-bottom: 2vw;
         & .btn-delete {
             margin-left: 1vw;
+        }
+    }
+}
+
+
+
+/* homepage */
+.home-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.ahoj a {
+    cursor: default;
+}
+
+/* detail */
+
+    
+.tree-info-container {
+    width: 60vw;
+    margin: 0 auto;
+
+    & img {
+        max-width: 100%;
+	    height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    & .info {
+        
+        & h2 {
+            text-align: center;
+            margin-bottom: 2vw;
+        }
+        & p {
+            width: 60%;
+            margin: auto;
+        }
+        & button {
+            display: block;
+            margin: auto;
+            margin-top: 2vw;
         }
     }
 }

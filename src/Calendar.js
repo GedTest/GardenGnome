@@ -4,6 +4,7 @@ import useFetch from "./useFetch";
 import Event from "./Event";
 import { toReadableDate } from "./date";
 import UpdateForm from "./UpdateForm";
+import { Link } from "react-router-dom";
 
 
 const weekday = ["PO", "ÚT", "ST", "ČT", "PÁ", "SO", "NE"];
@@ -15,7 +16,7 @@ const months = [
 ];
 
 
-export default function Calendar() {
+export default function Calendar({ isDisabled }) {
     const [now, setNow] = useState(new Date());
     const [clickedDate, setClickedDate] = useState(null);
     const [lastCell, setLastCell] = useState(null);
@@ -135,30 +136,41 @@ export default function Calendar() {
     return (
         <div className="calendar-wrapper">
             <div className="calendar-container">
-                <div className="calendar-header">
-                    { `${months[now.getMonth()]} ${now.getFullYear()}` }
-                </div>
-                <div className="calendar-grid">
-                    { weekday.map((day, index) => (
-                        <div key={index} className="weekday-cell">{ day }</div>
-                    )) }
-                    { emtpyCells && emtpyCells.map((_, index) => (
-                        <div key={index} className="empty-cell"></div>
-                    )) }
-                    { days && days.map((day, index) => (
-                        <div
-                            key={index}
-                            onClick={handleClick}
-                            className={
-                                `day-cell ${day === now.getDate() ? 'current-day' : ''}`
-                            }>{ day }</div>
-                    ))}
-                    { lastEmtpyCells && lastEmtpyCells.map((_, index) => (
-                        <div key={index} className="empty-cell"></div>
-                    )) }
-                </div>
+
+
+
+                <div className={isDisabled ? "" : "ahoj"}><Link to={isDisabled ? "/calendar" : null}>
+
+
+
+                    <div className="calendar-header">
+                        { `${months[now.getMonth()]} ${now.getFullYear()}` }
+                    </div>
+                    <div className="calendar-grid">
+                        { weekday.map((day, index) => (
+                            <div key={index} className="weekday-cell">{ day }</div>
+                        )) }
+                        { emtpyCells && emtpyCells.map((_, index) => (
+                            <div key={index} className="empty-cell"></div>
+                        )) }
+                        { days && days.map((day, index) => (
+                            <div
+                                key={index}
+                                onClick={handleClick}
+                                className={
+                                    `day-cell ${day === now.getDate() ? 'current-day' : ''}`
+                                }>{ day }</div>
+                        ))}
+                        { lastEmtpyCells && lastEmtpyCells.map((_, index) => (
+                            <div key={index} className="empty-cell"></div>
+                        )) }
+                    </div>
+                
+                </Link></div>
+
             </div>
-            { isFormVisible && (
+            
+            { !isDisabled && isFormVisible && (
                 isUpdateForm ? (
                     <UpdateForm
                         onFetch={ handleFetchEvents }
@@ -173,7 +185,7 @@ export default function Calendar() {
                 )
             ) }
                 
-            { isEventVisible &&
+            { !isDisabled && isEventVisible &&
                 <Event
                     event={ getSelectedEvent() }
                     onUpdate={ handleUpdate }
