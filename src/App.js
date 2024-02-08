@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import Calendar from './Calendar';
 import HomePage from './HomePage';
 import Detail from './Detail';
+import NotFound from './NotFound';
 
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/" element={ <HomePage /> } />
           <Route path="/calendar" element={ <Calendar isDisabled={ false } /> } />
           <Route path="/trees/:id" element={ <Detail /> } />
+          <Route path="*" element={ <NotFound /> } />
         </Routes>
       </div>
     </Router>
