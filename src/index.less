@@ -8,6 +8,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    min-width: 0;
 }
 
 body {
@@ -224,7 +225,12 @@ form {
 /* homepage */
 .home-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    & .home-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 
@@ -264,10 +270,40 @@ form {
 }
 
 
-
+/* 404 page not found */
 .not-found-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
 }
+
+
+
+/* page */
+.map-container {
+    user-select: none;
+    width: 80vw;
+    height: 50vw;
+    overflow: hidden;
+    background-color: white;
+
+    & .map {
+        height: 100%;
+        width: 100%;
+        background: url('/public/img/grass.jpg');
+        
+        & .background {
+            position: relative;
+            width: 100%;
+        }
+        & .tree-icon {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 10vw;
+        }
+    }
+
+}
+
