@@ -1,4 +1,4 @@
-import { toReadableDate } from "./date";
+import { toReadableDate } from "../date";
 
 
 export default function Event({ event, onUpdate, onDelete }) {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { toJSDate } from "./date";
+import { toJSDate } from "../date";
 
 
 export default function BaseForm({ selectedDate, text, callback }) {

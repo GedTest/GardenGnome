@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import useFetch from "./useFetch";
-import { toReadableDate } from "./date";
+import useFetch from "../Hooks/useFetch";
+import { toReadableDate } from "../date";
 
 
 export default function Detail() {

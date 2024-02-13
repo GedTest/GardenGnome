@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './Navbar';
-import Calendar from './Calendar';
-import HomePage from './HomePage';
-import Detail from './Detail';
-import NotFound from './NotFound';
+import Navbar from './Components/Navbar';
+import Calendar from './Components/Calendar';
+import HomePage from './Components/HomePage';
+import Detail from './Components/Detail';
+import NotFound from './Components/NotFound';
 
 
 export default function App() {

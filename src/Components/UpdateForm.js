@@ -1,5 +1,5 @@
 import BaseForm from "./BaseForm";
-import { toReadableDate } from "./date";
+import { toReadableDate } from "../date";
 
 
 export default function UpdateForm({ onFetch, event }) {

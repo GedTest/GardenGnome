@@ -1,5 +1,5 @@
-import useFetch from "./useFetch";
-import { toReadableDate } from "./date";
+import useFetch from "../Hooks/useFetch";
+import { toReadableDate } from "../date";
 import { Link } from "react-router-dom";
 
 
