@@ -33,33 +33,41 @@ export default function Map() {
 
         const mapRect = document.querySelector('.map').getBoundingClientRect();
         const bgRect = document.querySelector('.background').getBoundingClientRect();
-
-        let newX = e.clientX - dragStart.x;
-        let newY = e.clientY - dragStart.y;
-
-        // prevent dragging too far so the image is out of map rectangle
-        if(newX > mapRect.width/2) { newX = mapRect.width/2;}
-        if(newY > mapRect.height/2) { newY = mapRect.height/2;}
-
+        
+        
         // horizontal axis
-        const isBeyondLeft = bgRect.x > mapRect.x;
-        const isBeyondRight = (bgRect.x + bgRect.width) < (mapRect.x + mapRect.width);
-        if( !(isBeyondLeft && (newX-offsetX) > 0) &&
-            !(isBeyondRight && (newX-offsetX) < 0) ) {
-            setOffsetX(newX);
-        }
+        let mouseMoveDeltaX = e.clientX - dragStart.x;
+        const limitX = Math.ceil((bgRect.width - mapRect.width) / 2);
+        let nextOffsetX = Math.min(mouseMoveDeltaX, limitX);
 
+        const isBeyondLeft = bgRect.x > mapRect.x;
+        const isBeyondRight = (bgRect.x + bgRect.width - 1) < (mapRect.x + mapRect.width);
+        const nextOffsetDeltaX = nextOffsetX - offsetX;
+        
+        if( !(isBeyondLeft && nextOffsetDeltaX > 0) &&
+            !(isBeyondRight && nextOffsetDeltaX < 0) ) {
+            setOffsetX(nextOffsetX);
+        }
+        
+        
         // vertical axis
+        const mouseMoveDeltaY = e.clientY - dragStart.y;
+        const limitY = Math.ceil((bgRect.height - mapRect.height) / 2);
+        let nextOffsetY = Math.min(mouseMoveDeltaY, limitY);
+
         const isBeyondUpper = bgRect.y > mapRect.y;
         const isBeyondLower = (bgRect.y + bgRect.height) < (mapRect.y + mapRect.height);
-        if ( !(isBeyondUpper && (newY-offsetY) > 0) &&
-            !(isBeyondLower && (newY-offsetY) < 0) ) {
-            setOffsetY(newY);
+        const nextOffsetDeltaY = nextOffsetY - offsetY;
+
+        if ( !(isBeyondUpper && nextOffsetDeltaY > 0) &&
+             !(isBeyondLower && nextOffsetDeltaY < 0) ) {
+            setOffsetY(nextOffsetY);
         }
     }
 
     function handleMouseUp()  {
         setIsDragging(false);
+        setDragStart({x: 0, y: 0});
     }
 
     function handleZoom(value, max=2.0, min=1.0) {
@@ -108,6 +116,7 @@ export default function Map() {
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
             >
                 <div className="map">
                     <img
