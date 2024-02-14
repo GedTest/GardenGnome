@@ -11,7 +11,7 @@ export default function TreeList() {
             {trees && trees.map((tree) => (
                 <Link to={ `/trees/${tree.id}` } key={tree.id}>
                     <div className="list-row">
-                        <img src={tree.imgPath} alt={tree.name}/>
+                        <img src={`./img/${tree.image}`} alt={tree.name}/>
                         <p>{ tree.name }</p>
                         <div className="date">Zasazeno: { toReadableDate(tree.plantingDate) }</div>
                     </div>

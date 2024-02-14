@@ -13,7 +13,7 @@ export default function Detail() {
     return (<>
         { trees && (
             <div className="tree-info-container">
-                <img src={ trees.imgPath } alt={ trees.name } />
+                <img src={ `../img/${trees.image}` } alt={ trees.name } />
                 <div className="info">
                     <h2>{ trees.name } (zasazeno { toReadableDate(trees.plantingDate) })</h2>
                     <p>{ trees.description }</p>

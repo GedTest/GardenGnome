@@ -25,9 +25,9 @@ export default function useHold(callback, elementRef, cooldown) {
             elementRef.current.addEventListener("mouseout", clearTimer);
 
             return () => {
-                elementRef.current.removeEventListener("mousedown", onMouseDown);
-                elementRef.current.removeEventListener("mouseup", clearTimer);
-                elementRef.current.removeEventListener("mouseout", clearTimer);
+                elementRef?.current?.removeEventListener("mousedown", onMouseDown);
+                elementRef?.current?.removeEventListener("mouseup", clearTimer);
+                elementRef?.current?.removeEventListener("mouseout", clearTimer);
             };
         }
     }, [callback]);
