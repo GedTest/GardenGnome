@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import useHold from '../Hooks/useHold';
+import useMouseHold from '../Hooks/useMouseHold';
 
 
 export default function Map() {
@@ -11,8 +11,8 @@ export default function Map() {
     const btnPlusRef = useRef(null);
     const btnMinusRef = useRef(null);
 
-    useHold(() => handleZoom(0.1), btnPlusRef, 60);
-    useHold(() => handleZoom(-0.1), btnMinusRef, 60);
+    useMouseHold(() => handleZoom(0.1), btnPlusRef, 60);
+    useMouseHold(() => handleZoom(-0.1), btnMinusRef, 60);
     
 
 

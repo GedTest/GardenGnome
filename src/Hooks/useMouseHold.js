@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 
-export default function useHold(callback, elementRef, cooldown) {
+export default function useMouseHold(callback, elementRef, cooldown) {
     const callbackRef = useRef(callback);
     const timerIdRef = useRef(null);
 
